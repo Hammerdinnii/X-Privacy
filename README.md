@@ -8,7 +8,7 @@ Chrome extension that hides **your display name and @username** in the bottom-le
 2. Open Chrome and go to `chrome://extensions/`
 3. Turn on **Developer mode** (top right).
 4. Click **Load unpacked**.
-5. Select the `x-hide-sidebar-identity` folder.
+5. Select the `X-Privacy` folder.
 6. Open or refresh `https://x.com`.
 
 Click the extension icon to turn hiding on/off.
