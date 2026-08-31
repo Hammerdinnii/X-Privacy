@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>X Sidebar Identity Hider</title>
+    <style>
+      :root {
+        color-scheme: dark;
+      }
+      body {
+        margin: 0;
+        width: 280px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: #16181c;
+        color: #f2f4f8;
+      }
+      .wrap {
+        padding: 16px;
+      }
+      h1 {
+        font-size: 14px;
+        margin: 0 0 4px;
+        font-weight: 700;
+      }
+      p {
+        margin: 0 0 14px;
+        font-size: 12px;
+        line-height: 1.4;
+        color: #9aa0a6;
+      }
+      .row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        background: #101628;
+        border-radius: 10px;
+        padding: 12px;
+      }
+      .label {
+        font-size: 13px;
+        font-weight: 600;
+      }
+      .switch {
+        position: relative;
+        width: 42px;
+        height: 24px;
+        flex-shrink: 0;
+      }
+      .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      .slider {
+        position: absolute;
+        inset: 0;
+        background: #3a3f46;
+        border-radius: 999px;
+        cursor: pointer;
+        transition: 0.15s;
+      }
+      .slider:before {
+        content: "";
+        position: absolute;
+        height: 18px;
+        width: 18px;
+        left: 3px;
+        top: 3px;
+        background: #fff;
+        border-radius: 50%;
+        transition: 0.15s;
+      }
+      input:checked + .slider {
+        background: #3ad0ea;
+      }
+      input:checked + .slider:before {
+        transform: translateX(18px);
+      }
+      .hint {
+        margin-top: 12px;
+        font-size: 11px;
+        color: #6b7280;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>X Sidebar Identity Hider</h1>
+      <p>Hide your name and @username in the bottom-left corner of X.com.</p>
+      <div class="row">
+        <span class="label">Hide name &amp; handle</span>
+        <label class="switch">
+          <input type="checkbox" id="toggle" checked />
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div class="hint">Avatar stays visible so you can still switch accounts. Reload X if it doesn’t apply instantly.</div>
+    </div>
+    <script src="popup.js"></script>
+  </body>
+</html>

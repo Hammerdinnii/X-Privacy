@@ -1,0 +1,22 @@
+/* X Sidebar Identity Hider
+   Hide display name + @handle in the bottom-left account switcher.
+   Keep the avatar so the button still works. */
+
+html.x-hide-sidebar-identity [data-testid="SideNav_AccountSwitcher_Button"] > div:nth-child(2),
+html.x-hide-sidebar-identity [data-testid="SideNav_AccountSwitcher_Button"] > div:last-child:not(:first-child) {
+  display: none !important;
+}
+
+/* Tightened layout so the leftover avatar doesn't look off-center */
+html.x-hide-sidebar-identity [data-testid="SideNav_AccountSwitcher_Button"] {
+  width: auto !important;
+  max-width: 64px !important;
+  padding-right: 8px !important;
+  justify-content: flex-start !important;
+}
+
+/* If X ever nests the text column differently, hide obvious handle/name spans
+   inside the switcher but never the avatar image. */
+html.x-hide-sidebar-identity [data-testid="SideNav_AccountSwitcher_Button"] [dir="ltr"]:not(:has(img)):not(:has([data-testid^="UserAvatar"])) {
+  display: none !important;
+}
