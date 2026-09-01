@@ -1,5 +1,7 @@
 # X Sidebar Identity Hider
 
+For a easy install just click here to add to chrome! https://chromewebstore.google.com/detail/x-privacy/hfailpkhbdhkmlgpogmdogdghfacjomm?authuser=0&hl=en
+
 Chrome extension that hides **your display name and @username** in the bottom-left account switcher on [x.com](https://x.com). The profile picture stays so you can still open the account menu.
 
 ## Install (unpacked)
