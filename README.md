@@ -22,9 +22,9 @@ Click the extension icon to turn hiding on/off.
 
 It does **not** hide:
 
-- Your avatar
 - Your name on posts, profile pages, or replies
 - Other people’s names
+(These may come very soon)
 
 X is a single-page app and restyles often. If a layout change brings the text back, reload the tab. The extension watches the DOM and re-applies the hide.
 
