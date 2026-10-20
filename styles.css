@@ -1,22 +1,98 @@
-/* X Sidebar Identity Hider
-   Hide display name + @handle in the bottom-left account switcher.
-   Keep the avatar so the button still works. */
+/* X Privacy — page styles
+ *
+ * Nothing here applies until content.js sets flags on <html>:
+ *   data-xp-on                       master switch
+ *   data-xp-mode="hide" | "blur"     how to hide
+ *   data-xp-sidebar                  account switcher (bottom-left)
+ *   data-xp-menu                     account menu (opens from the switcher)
+ *   data-xp-posts                    your own posts, replies and quotes
+ *   data-xp-profile                  header of your own profile page
+ *   data-xp-avatar                   blur your avatar
+ *   data-xp-hover                    reveal blurred items on hover
+ *
+ * content.js marks the elements to act on:
+ *   data-xp-m-<feature>="collapse"   text block → removed (hide) or blurred (blur)
+ *   data-xp-m-<feature>="mask"       inline text → invisible (hide) or blurred (blur)
+ *   data-xp-m-<feature>="aux"        icon-only sibling → removed in hide mode only
+ *   data-xp-m-avatar                 your avatar
+ */
 
-html.x-hide-sidebar-identity [data-testid="SideNav_AccountSwitcher_Button"] > div:nth-child(2),
-html.x-hide-sidebar-identity [data-testid="SideNav_AccountSwitcher_Button"] > div:last-child:not(:first-child) {
+/* ---------- Sidebar: CSS-only baseline (works even before JS marks) ---------- */
+
+html[data-xp-on][data-xp-mode="hide"][data-xp-sidebar]
+  [data-testid="SideNav_AccountSwitcher_Button"]
+  [dir="ltr"]:not(:has(img)):not(:has([data-testid^="UserAvatar-Container-"])) {
   display: none !important;
 }
 
-/* Tightened layout so the leftover avatar doesn't look off-center */
-html.x-hide-sidebar-identity [data-testid="SideNav_AccountSwitcher_Button"] {
+html[data-xp-on][data-xp-mode="blur"][data-xp-sidebar]
+  [data-testid="SideNav_AccountSwitcher_Button"]
+  [dir="ltr"]:not(:has(img)):not(:has([data-testid^="UserAvatar-Container-"])) {
+  filter: blur(6px) !important;
+  user-select: none !important;
+}
+
+/* Tighten the switcher so the lone avatar doesn't sit in an empty bar */
+html[data-xp-on][data-xp-mode="hide"][data-xp-sidebar] [data-testid="SideNav_AccountSwitcher_Button"] {
   width: auto !important;
   max-width: 64px !important;
   padding-right: 8px !important;
   justify-content: flex-start !important;
 }
 
-/* If X ever nests the text column differently, hide obvious handle/name spans
-   inside the switcher but never the avatar image. */
-html.x-hide-sidebar-identity [data-testid="SideNav_AccountSwitcher_Button"] [dir="ltr"]:not(:has(img)):not(:has([data-testid^="UserAvatar"])) {
+/* ---------- HIDE mode ---------- */
+
+html[data-xp-on][data-xp-mode="hide"][data-xp-sidebar] [data-xp-m-sidebar="collapse"],
+html[data-xp-on][data-xp-mode="hide"][data-xp-sidebar] [data-xp-m-sidebar="aux"],
+html[data-xp-on][data-xp-mode="hide"][data-xp-menu] [data-xp-m-menu="collapse"],
+html[data-xp-on][data-xp-mode="hide"][data-xp-menu] [data-xp-m-menu="aux"],
+html[data-xp-on][data-xp-mode="hide"][data-xp-posts] [data-xp-m-posts="collapse"] {
   display: none !important;
+}
+
+html[data-xp-on][data-xp-mode="hide"][data-xp-menu] [data-xp-m-menu="mask"],
+html[data-xp-on][data-xp-mode="hide"][data-xp-profile] [data-xp-m-profile] {
+  visibility: hidden !important;
+}
+
+/* ---------- BLUR mode ---------- */
+
+html[data-xp-on][data-xp-mode="blur"][data-xp-sidebar] [data-xp-m-sidebar="collapse"],
+html[data-xp-on][data-xp-mode="blur"][data-xp-menu] [data-xp-m-menu="collapse"],
+html[data-xp-on][data-xp-mode="blur"][data-xp-menu] [data-xp-m-menu="mask"],
+html[data-xp-on][data-xp-mode="blur"][data-xp-posts] [data-xp-m-posts],
+html[data-xp-on][data-xp-mode="blur"][data-xp-profile] [data-xp-m-profile] {
+  filter: blur(6px) !important;
+  user-select: none !important;
+  transition: filter 0.15s ease;
+}
+
+/* Reveal on hover (blur mode only).
+   Each selector repeats the feature flag so it out-ranks the blur rules above. */
+html[data-xp-on][data-xp-mode="blur"][data-xp-hover][data-xp-sidebar]
+  [data-testid="SideNav_AccountSwitcher_Button"]:hover
+  [data-xp-m-sidebar],
+html[data-xp-on][data-xp-mode="blur"][data-xp-hover][data-xp-sidebar]
+  [data-testid="SideNav_AccountSwitcher_Button"]:hover
+  [dir="ltr"],
+html[data-xp-on][data-xp-mode="blur"][data-xp-hover][data-xp-menu] [role="menuitem"]:hover [data-xp-m-menu],
+html[data-xp-on][data-xp-mode="blur"][data-xp-hover][data-xp-menu] [data-xp-m-menu]:hover,
+html[data-xp-on][data-xp-mode="blur"][data-xp-hover][data-xp-posts]
+  [data-testid="User-Name"]:hover
+  [data-xp-m-posts],
+html[data-xp-on][data-xp-mode="blur"][data-xp-hover][data-xp-posts] [data-xp-m-posts]:hover,
+html[data-xp-on][data-xp-mode="blur"][data-xp-hover][data-xp-profile] [data-xp-m-profile]:hover {
+  filter: none !important;
+  user-select: auto !important;
+}
+
+/* ---------- Avatar blur (any mode) ---------- */
+
+html[data-xp-on][data-xp-avatar] [data-xp-m-avatar] {
+  overflow: hidden !important;
+}
+
+html[data-xp-on][data-xp-avatar] [data-xp-m-avatar] img,
+html[data-xp-on][data-xp-avatar] [data-xp-m-avatar] [style*="background-image"] {
+  filter: blur(5px) !important;
 }
