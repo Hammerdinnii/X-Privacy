@@ -35,7 +35,7 @@ Chrome extension that hides **your display name, @handle and (optionally) your a
 
 ## Install (unpacked)
 
-1. Download or clone this repository.
+1. Download `x-privacy-v<version>.zip` from the [latest release](../../releases/latest) and unzip it (or clone this repository).
 2. Open `chrome://extensions/` and turn on **Developer mode** (top right).
 3. Click **Load unpacked** and select the `X-Privacy` folder.
 4. Open or reload `https://x.com`.
@@ -68,6 +68,8 @@ npm test                         # run the checks against test/fixture.html (a m
 npm run shots                    # same, and refresh docs/popup*.png
 npm run zip                      # build dist/x-privacy-v<version>.zip for the Web Store
 ```
+
+To publish a release, bump `version` in `manifest.json` (and `package.json`), add notes to `.github/release-notes/v<version>.md`, then push a matching tag. The **Release** workflow builds the zip and publishes the GitHub release with it attached.
 
 `test/fixture.html` imitates the parts of X's DOM the extension cares about (sidebar switcher, account menu, timeline, profile header). `test/run.mjs` loads the real `content.js` and `styles.css` into it with a stubbed `chrome.*` API and checks what ends up hidden, blurred or left alone, then does the same for the popup.
 
