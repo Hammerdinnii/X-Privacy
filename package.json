@@ -1,0 +1,14 @@
+{
+  "name": "x-privacy",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Chrome extension that hides your name, @handle and avatar on X.com while screen sharing or streaming.",
+  "scripts": {
+    "test": "node test/run.mjs",
+    "shots": "node test/run.mjs --shots",
+    "zip": "bash scripts/package.sh"
+  },
+  "devDependencies": {
+    "playwright": "^1.56.1"
+  }
+}

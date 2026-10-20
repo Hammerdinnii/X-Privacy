@@ -1,8 +1,10 @@
 {
   "manifest_version": 3,
-  "name": "X Sidebar Identity Hider",
-  "version": "1.0.0",
-  "description": "Hides your display name and @username in the bottom-left account switcher on X.com. Avatar stays so you can still switch accounts.",
+  "name": "X Privacy",
+  "short_name": "X Privacy",
+  "version": "2.0.0",
+  "description": "Hide your name, @handle and avatar on X while screen sharing or streaming. Sidebar, account menu, posts and profile. Hide or blur.",
+  "minimum_chrome_version": "105",
   "icons": {
     "16": "icons/icon16.png",
     "32": "icons/icon32.png",
@@ -10,7 +12,7 @@
     "128": "icons/icon128.png"
   },
   "action": {
-    "default_title": "X Sidebar Identity Hider",
+    "default_title": "X Privacy",
     "default_popup": "popup.html",
     "default_icon": {
       "16": "icons/icon16.png",
@@ -19,16 +21,21 @@
     }
   },
   "permissions": ["storage"],
-  "host_permissions": [
-    "https://x.com/*",
-    "https://twitter.com/*"
-  ],
+  "host_permissions": ["https://x.com/*", "https://twitter.com/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "commands": {
+    "toggle-enabled": {
+      "suggested_key": {
+        "default": "Alt+Shift+X"
+      },
+      "description": "Turn X Privacy on or off"
+    }
+  },
   "content_scripts": [
     {
-      "matches": [
-        "https://x.com/*",
-        "https://twitter.com/*"
-      ],
+      "matches": ["https://x.com/*", "https://twitter.com/*"],
       "js": ["content.js"],
       "css": ["styles.css"],
       "run_at": "document_start"

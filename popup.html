@@ -1,102 +1,203 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>X Sidebar Identity Hider</title>
-    <style>
-      :root {
-        color-scheme: dark;
-      }
-      body {
-        margin: 0;
-        width: 280px;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        background: #16181c;
-        color: #f2f4f8;
-      }
-      .wrap {
-        padding: 16px;
-      }
-      h1 {
-        font-size: 14px;
-        margin: 0 0 4px;
-        font-weight: 700;
-      }
-      p {
-        margin: 0 0 14px;
-        font-size: 12px;
-        line-height: 1.4;
-        color: #9aa0a6;
-      }
-      .row {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-        background: #101628;
-        border-radius: 10px;
-        padding: 12px;
-      }
-      .label {
-        font-size: 13px;
-        font-weight: 600;
-      }
-      .switch {
-        position: relative;
-        width: 42px;
-        height: 24px;
-        flex-shrink: 0;
-      }
-      .switch input {
-        opacity: 0;
-        width: 0;
-        height: 0;
-      }
-      .slider {
-        position: absolute;
-        inset: 0;
-        background: #3a3f46;
-        border-radius: 999px;
-        cursor: pointer;
-        transition: 0.15s;
-      }
-      .slider:before {
-        content: "";
-        position: absolute;
-        height: 18px;
-        width: 18px;
-        left: 3px;
-        top: 3px;
-        background: #fff;
-        border-radius: 50%;
-        transition: 0.15s;
-      }
-      input:checked + .slider {
-        background: #3ad0ea;
-      }
-      input:checked + .slider:before {
-        transform: translateX(18px);
-      }
-      .hint {
-        margin-top: 12px;
-        font-size: 11px;
-        color: #6b7280;
-      }
-    </style>
+    <meta name="color-scheme" content="dark light" />
+    <title>X Privacy</title>
+    <link rel="stylesheet" href="popup.css" />
   </head>
   <body>
-    <div class="wrap">
-      <h1>X Sidebar Identity Hider</h1>
-      <p>Hide your name and @username in the bottom-left corner of X.com.</p>
-      <div class="row">
-        <span class="label">Hide name &amp; handle</span>
-        <label class="switch">
-          <input type="checkbox" id="toggle" checked />
-          <span class="slider"></span>
+    <main class="app">
+      <header class="header">
+        <div class="brand">
+          <span class="logo" aria-hidden="true">
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />
+              <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" />
+              <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" />
+              <line x1="2" y1="2" x2="22" y2="22" />
+            </svg>
+          </span>
+          <div class="brand-text">
+            <h1>X Privacy</h1>
+            <p class="tagline">Hide who you are on X</p>
+          </div>
+        </div>
+        <label class="master" title="Turn X Privacy on or off (Alt+Shift+X)">
+          <span class="pill" id="statusPill">Active</span>
+          <input type="checkbox" id="enabled" class="switch" role="switch" aria-label="Enable X Privacy" />
         </label>
-      </div>
-      <div class="hint">Avatar stays visible so you can still switch accounts. Reload X if it doesn’t apply instantly.</div>
-    </div>
+      </header>
+
+      <section class="card" aria-labelledby="what-title">
+        <div class="section-head">
+          <h2 id="what-title" class="section-title">What to hide</h2>
+          <button type="button" class="link" id="toggleAll">Enable all</button>
+        </div>
+        <ul class="rows">
+          <li class="row">
+            <span class="icon" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                width="18"
+                height="18"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="3" y="3" width="18" height="18" rx="2" />
+                <path d="M9 3v18" />
+                <circle cx="6" cy="17.5" r="1" fill="currentColor" stroke="none" />
+              </svg>
+            </span>
+            <div class="text">
+              <label for="hideSidebar">Sidebar account switcher</label>
+              <small>Your name &amp; @handle in the bottom-left corner</small>
+            </div>
+            <input type="checkbox" id="hideSidebar" class="switch" role="switch" />
+          </li>
+          <li class="row">
+            <span class="icon" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                width="18"
+                height="18"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M8 6h13M8 12h13M8 18h13" />
+                <path d="M3 6h.01M3 12h.01M3 18h.01" />
+              </svg>
+            </span>
+            <div class="text">
+              <label for="hideMenu">Account menu</label>
+              <small>The list of accounts that opens from the switcher</small>
+            </div>
+            <input type="checkbox" id="hideMenu" class="switch" role="switch" />
+          </li>
+          <li class="row">
+            <span class="icon" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                width="18"
+                height="18"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+              </svg>
+            </span>
+            <div class="text">
+              <label for="hidePosts">Your posts &amp; replies</label>
+              <small>Name &amp; @handle on everything you've posted</small>
+            </div>
+            <input type="checkbox" id="hidePosts" class="switch" role="switch" />
+          </li>
+          <li class="row">
+            <span class="icon" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                width="18"
+                height="18"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+            </span>
+            <div class="text">
+              <label for="hideProfile">Profile header</label>
+              <small>Name &amp; @handle at the top of your own profile</small>
+            </div>
+            <input type="checkbox" id="hideProfile" class="switch" role="switch" />
+          </li>
+          <li class="row">
+            <span class="icon" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                width="18"
+                height="18"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <circle cx="12" cy="10" r="3" />
+                <path d="M6.17 18.8a6 6 0 0 1 11.66 0" />
+              </svg>
+            </span>
+            <div class="text">
+              <label for="blurAvatar">Blur your avatar</label>
+              <small>Keeps it clickable so you can still switch accounts</small>
+            </div>
+            <input type="checkbox" id="blurAvatar" class="switch" role="switch" />
+          </li>
+        </ul>
+      </section>
+
+      <section class="card" aria-labelledby="how-title">
+        <div class="section-head">
+          <h2 id="how-title" class="section-title">How to hide</h2>
+        </div>
+        <div class="segmented" role="radiogroup" aria-label="Hide style">
+          <label class="seg">
+            <input type="radio" name="mode" value="hide" />
+            <span class="seg-body">
+              <span class="seg-label">Hide</span>
+              <span class="seg-sub">Remove it entirely</span>
+            </span>
+          </label>
+          <label class="seg">
+            <input type="radio" name="mode" value="blur" />
+            <span class="seg-body">
+              <span class="seg-label">Blur</span>
+              <span class="seg-sub">Keep the layout</span>
+            </span>
+          </label>
+        </div>
+        <div class="row sub" id="hoverRow">
+          <div class="text">
+            <label for="revealOnHover">Reveal on hover</label>
+            <small>Un-blur while your mouse is over it</small>
+          </div>
+          <input type="checkbox" id="revealOnHover" class="switch" role="switch" />
+        </div>
+      </section>
+
+      <footer class="footer">
+        <div class="status" id="status" role="status" aria-live="polite">
+          <span class="dot" aria-hidden="true"></span>
+          <span id="statusText">Checking this tab…</span>
+        </div>
+        <div class="actions">
+          <button type="button" class="btn" id="tabAction" hidden>Reload tab</button>
+          <span class="kbd-hint"><kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>X</kbd> toggles on/off</span>
+        </div>
+      </footer>
+    </main>
     <script src="popup.js"></script>
   </body>
 </html>
