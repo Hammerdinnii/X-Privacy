@@ -39,7 +39,11 @@ jobs:
           title="X Privacy ${GITHUB_REF_NAME#v}"
           notes=".github/release-notes/${GITHUB_REF_NAME}.md"
           if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            # Release was created first (e.g. from the GitHub UI): attach the zip and apply the notes.
             gh release upload "$GITHUB_REF_NAME" dist/*.zip --clobber
+            if [ -f "$notes" ]; then
+              gh release edit "$GITHUB_REF_NAME" --title "$title" --notes-file "$notes" --latest
+            fi
           elif [ -f "$notes" ]; then
             gh release create "$GITHUB_REF_NAME" dist/*.zip --title "$title" --notes-file "$notes" --latest
           else
